@@ -6,47 +6,22 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 21:58:38 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/23 21:58:41 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/04/24 06:15:47 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
 
-static void    remove_env_nodes(t_shell *mini, char *unset)
+int	builtin_pwd(void)
 {
-    t_env   *current;
-    t_env   *prev;
+	char	*pwd;
 
-    current = mini->initenv->env;
-    prev = NULL;
-    if (!unset)
-        return ;
-    while (current)
-    {
-        if (ft_strncmp(current->name, unset, ft_strlen(unset)) == 0)
-        {
-            if (prev)
-                prev->next = current->next;
-             else
-                mini->initenv->env = current->next;
-            free(current->name);
-            if (current->value)
-              free(current->value);
-            free(current);
-            return ;
-        }
-        prev = current;
-        current = current->next;
-    }
-}
-
-void    builtin_unset(t_shell *mini, char **unset)
-{
-    int     i;
-
-    i = 1;
-    if (!unset)
-        return ;
-    while (unset[i])
-        remove_env_nodes(mini, unset[i++]);
+	pwd = getcwd(NULL, 0);
+	if (pwd)
+	{
+		ft_putendl_fd(pwd, 1);
+		return (0);
+	}
+	ft_putendl_fd("Error : can not get pwd!", 2);
+	return (1);
 }
