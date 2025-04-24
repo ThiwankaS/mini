@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 21:58:25 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/23 21:58:28 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/04/24 04:47:47 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,6 @@ int	builtin_cd(t_shell *mini)
 	return (0);
 }
 
-/**
- * will work with the same way env command on bash
-*/
 int	builtin_env(t_shell *mini)
 {
 	t_env	*temp;
@@ -106,9 +103,6 @@ int	builtin_pwd(void)
 	printf("%s\n", pwd);
 	return (2);
 }
-/**
- * to check if the command is in the built_in commands list, if yes then use the custome one
-*/
 
 int	check_builtin(t_shell *mini)
 {
