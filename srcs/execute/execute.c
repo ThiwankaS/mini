@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 21:59:05 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/23 21:59:08 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/04/24 04:19:38 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ int execute(t_shell *mini)
 					exit (1);
 				}
 				close(fd);
+				if(current->type == HDRD_CMD)
+					unlink(current->filename);
 			}
 			if(index > 0)
 				dup2(fd[index - 1][0], STDIN_FILENO);
