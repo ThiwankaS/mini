@@ -6,48 +6,24 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 22:01:44 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/23 22:01:47 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/04/26 02:35:42 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
-
-static char **set_arg_array_quoted(t_shell *mini, char *token);
-static char *set_command(t_shell *mini, char *token);
 
 t_cmd *handle_quoted(t_shell *mini, char *token)
 {
 	t_cmd *cmd = malloc(sizeof(t_cmd));
 	if(!cmd)
 		return (NULL);
+	cmd->cmd = get_command(token);
 	cmd->type = SMPL_CMD;
 	cmd->command = set_path_name(mini, token);
 	cmd->num_args = 2;
 	cmd->filename = NULL;
-	cmd->args = set_arg_array_quoted(mini, token);
+	cmd->args = set_arg_array(token, cmd->num_args);
 	cmd->next = NULL;
-	return (cmd);
-}
-
-static char **set_arg_array_quoted(t_shell *mini, char *token)
-{
-	char **args = malloc(sizeof(char *) * 2);
-	args[0] = set_command(mini, token);
-	args[1] = NULL;
-	return (args);
-}
-
-static char *set_command(t_shell *mini, char *token)
-{
-	int i = 0;
-	char *cmd;
-
-	while(token && token[i] && !ft_isspace(token[i]))
-		i++;
-	if(token[i])
-		cmd = set_path_name(mini, token);
-	else
-		cmd = set_path_name(mini, token);
 	return (cmd);
 }
 

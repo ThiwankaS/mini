@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 21:59:05 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/24 04:19:38 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/04/26 02:34:17 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,13 @@ int execute(t_shell *mini)
 			if(current->next)
 				dup2(fd[index][1], STDOUT_FILENO);
 			close_fds(fd, limit);
+			// printf("num : %d\n", current->num_args);
+			// int i = 0;
+			// while(current->args[i])
+			// {
+			// 	printf("args[%d] : %s \n", i, current->args[i]);
+			// 	i++;
+			// }
 			mini->initenv->copy_env = copy_env(mini->initenv->env);
 			if((execve(current->command, current->args, mini->initenv->copy_env)) == -1)
 				exit(1);
