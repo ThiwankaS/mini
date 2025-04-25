@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 21:40:50 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/23 22:02:08 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/04/25 06:45:39 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,13 @@ int	main(int ac, char **av, char **envp)
 		init_env(&initenv, envp);
 		while (1)
 		{
-			input = readline("minishell> ");
+			input = readline(isatty(STDIN_FILENO) ? "minishell> " : NULL);
+			if (!input)
+			{
+				if (isatty(STDIN_FILENO))
+					write(STDIN_FILENO, "exit", 5);
+				break;
+			}
 			if (ft_isempty(input))
 			{
 				free(input);

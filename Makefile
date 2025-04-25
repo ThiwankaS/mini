@@ -17,6 +17,12 @@ LIBFT_INC = $(LIBFT_DIR)/libft.h $(LIBFT_DIR)/ft_printf.h $(LIBFT_DIR)/get_next_
 SRCS = \
 	srcs/built_in/cd.c\
 	srcs/built_in/pwd.c\
+	srcs/built_in/echo.c\
+	srcs/built_in/env.c\
+	srcs/built_in/builtin.c\
+	srcs/built_in/unset.c\
+	srcs/built_in/export.c\
+	srcs/built_in/exit.c\
 	srcs/clean/cleaner.c\
 	srcs/execute/execute.c\
 	srcs/parse/envrn.c\

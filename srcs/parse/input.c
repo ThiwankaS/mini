@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:38:37 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/23 21:59:50 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/04/25 19:38:21 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_cmd	*handel_input(t_shell *mini, char *token)
 	cmd->command = set_path_name(mini, arg_str);
 	cmd->filename = set_filename(token, '<');
 	cmd->num_args = get_num_args(arg_str);
-	cmd->args = set_arg_array(cmd->num_args, arg_str, cmd->command);
+	cmd->args = set_arg_array(arg_str, cmd->num_args);
 	cmd->next = NULL;
 	free(arg_str);
 	return (cmd);

@@ -91,15 +91,20 @@ int 	activate_shell(char *input, t_initenv *env);
 /**
  * Implementation in srcs/token.c
 */
-t_list 	*list_add_back(t_list *list, char *str);
-t_cmd 	*list_add_command(t_cmd *cmds, t_cmd *node);
-int 	extract_tokens(t_list **tokens, char *input);
+t_list	*list_add_back(t_list *list, char *str);
+t_cmd	*list_add_command(t_cmd *cmds, t_cmd *node);
+int		extract_tokens(t_list **tokens, char *input);
 
 /**
  * Implementation in srcs/parser.c
 */
-int parse_and_expand(t_shell *mini);
-t_cmd *handel_pipe(t_shell *mini, t_list *current);
+int		parse_and_expand(t_shell *mini);
+t_cmd	*handel_pipe(t_shell *mini, t_list *current);
+char	*ft_extract_word(char *token, int *index);
+int		ft_isquote(int c);
+int		ft_skip_quoted(char *token, int *index);
+int		get_num_args(char *token);
+char **set_arg_array(char *token, int size);
 
 /**
  * Implementaion in srcs/utils.c
@@ -144,30 +149,38 @@ t_cmd *handel_input(t_shell *mini, char *token);
 */
 t_cmd *handle_heredoc(t_shell *mini, t_cmd *cmd, char *token);
 
+/**
+ * Implementaion in srcs/buit_in
+*/
+bool	builtin_cmd(char *cmd);
+int		builtin_unset(t_shell *mini, char **unset_args);
+int		builtin_exit(t_shell *mini);
+int		builtin_pwd(void);
+int		builtin_cd(t_shell *mini);
+int		builtin_env(t_shell *mini);
+
+
 t_env	*new_node(char *content);
 void	add_to_list(t_env **env, char *content);
 void	list_env(t_env **env, char **envp);
 char	**copy_env(t_env *env);
 char	*extract_env_value(t_initenv *initenv, char *name);
-int		builtin_cd(t_shell *mini);
-int		builtin_env(t_shell *mini);
+
 int		check_builtin(t_shell *mini);
 int		ft_arraylen(char **envp);
 int		ft_isempty(char *str);
 char 	*get_command(char *token);
 int		tokenize(t_shell *mini, char *input);
 int		quotes_checker(char *input, int len);
-bool	builtin_cmd(char *cmd);
-void    builtin_unset(t_shell *mini, char **unset_args);
+
 
 int	ft_isspace(int c);
-
 t_cmd *handle_quoted(t_shell *mini, char *token);
 char *enclosed_in_quotes(char *input);
 int check_if_quoted(char *input);
 char *remove_quotes(char *str);
 char *set_path_name(t_shell *mini, char *token);
 int get_num_args(char *token);
-char **set_arg_array(int num_args, char *token, char *cmdpath);
+//char **set_arg_array(int num_args, char *token, char *cmdpath);
 int		ft_lst_len(t_env *env);
 #endif

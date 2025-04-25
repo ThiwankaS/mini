@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 22:00:03 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/23 22:00:15 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/04/25 20:13:24 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int get_num_args(char *token);
 void get_args(char **args, char *token, int size);
 char *get_command(char *token);
 char *set_path_name(t_shell *mini, char *token);
-char **set_arg_array(int num_args, char *token, char *cmdpath);
+char **set_arg_array(char *token, int size);
 
 int parse_and_expand(t_shell *mini)
 {
@@ -108,20 +108,28 @@ t_cmd *handel_pipe(t_shell *mini, t_list *current)
 	cmd->command = set_path_name(mini, current->token);
 	cmd->filename = NULL;
 	cmd->num_args = get_num_args(current->token);
-	cmd->args = set_arg_array(cmd->num_args, current->token, cmd->command);
+	cmd->args = set_arg_array(current->token, cmd->num_args);
 	cmd->next = NULL;
 	return (cmd);
 }
 
-char **set_arg_array(int num_args, char *token, char *cmdpath)
+char **set_arg_array(char *token, int size)
 {
-	char **args = malloc(sizeof(char*) * (num_args + 1));
-	if(!args)
+	int		i;
+	int		step;
+	char	**args;
+
+	step = 0;
+	i = 0;
+	args = malloc((size + 1) * sizeof(char *));
+	if (!args)
 		return (NULL);
-	args[0] = cmdpath;
-	if(num_args > 1)
-		get_args(args, token, num_args);
-	args[num_args] = NULL;
+	while (step < size && token[i])
+	{
+		args[step] = ft_extract_word(token, &i);
+		step++;
+	}
+	args[step] = NULL;
 	return (args);
 }
 
@@ -165,35 +173,22 @@ char *set_path_name(t_shell *mini, char *token)
 		if (builtin_cmd(command))
 			return (NULL);
 		else
-			printf("%s: command not found\n", command);
+			printf("%s: command not found1\n", command);
 	}
 	return (NULL);
 }
 
 char *get_command(char *token)
 {
-	int i = 0, j = 0;
-	char *command;
-	while(token && token[i])
-	{
-		if(token[i] == ' ')
-		{
-			command = malloc(sizeof(char)*(i + 1));
-			if(!command)
-				return (NULL);
-			while(token && token[j] && j < i)
-			{
-				command[j] = token[j];
-				j++;
-			}
-			command[j] = '\0';
-			return (command);
-		}
-		i++;
-	}
-	if(token[i] == '\0')
-		return (token);
-	return (NULL);
+	char	*cmd;
+	int		i;
+
+	i = 0;
+	cmd = NULL;
+	if (!token)
+		return (cmd);
+	cmd = ft_extract_word(token, &i);
+	return (cmd);
 }
 
 void get_args(char **args, char *token, int size)
@@ -222,18 +217,78 @@ void get_args(char **args, char *token, int size)
 
 int get_num_args(char *token)
 {
-	int i = 0, count = 1, flag = 0;
-	while(token && token[i])
+	int		i;
+	int		count;
+
+	i = 0;
+	count = 0;
+	while (token[i])
 	{
-		if(token[i] == ' ' && !flag)
+		while (ft_isspace(token[i]))
+			i++;
+		if (token[i] == '\0')
+			break ;
+		count++;
+		if (ft_isquote(token[i]))
+			ft_skip_quoted(token, &i);
+		else
 		{
-			count++;
-			flag = 1;
+			while (token[i] && !ft_isspace(token[i]) && !ft_isquote(token[i]))
+				i++;
 		}
-		else if(token[i] != ' ' && flag)
-			flag = 0;
-		i++;
 	}
 	return (count);
 }
 
+char	*ft_extract_word(char *token, int *index)
+{
+	int		i;
+	int		start;
+	char	*word;
+	char	quote_char;
+
+	i = *index;
+	while (ft_isspace(token[i]))
+		i++;
+	start = i;
+	if (ft_isquote(token[i]))
+	{
+		quote_char = token[i++];
+		start = i;
+		while (token[i] && token[i] != quote_char)
+			i++;
+		word = ft_strnmdup(token, start, i);
+		if (token[i] == quote_char)
+			i++;
+	}
+	else
+	{
+		while (token[i] && !ft_isspace(token[i]) && !ft_isquote(token[i]))
+			i++;
+		word = ft_strnmdup(token, start, i);
+	}
+	*index = i;
+	return (word);
+}
+
+int	ft_isquote(int c)
+{
+	if (c == '\'' || c == '"')
+		return (1);
+	return (0);
+}
+
+int	ft_skip_quoted(char *token, int *index)
+{
+	int		i;
+	char	quote_char;
+
+	i = *index;
+	quote_char = token[i++];
+	while (token[i] && token[i] != quote_char)
+		i++;
+	if (token[i] == quote_char)
+		i++;
+	*index = i;
+	return (1);
+}

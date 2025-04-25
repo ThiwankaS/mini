@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:57:23 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/23 21:59:39 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/04/25 19:37:36 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_cmd	*handle_heredoc(t_shell *mini, t_cmd *cmd, char *token)
 	cmd->filename = ft_strdup(CACHE);
 	cmd->cmd = get_command(new_token);
 	cmd->num_args = get_num_args(new_token);
-	cmd->args = set_arg_array(cmd->num_args, new_token, cmd->command);
+	cmd->args = set_arg_array(new_token, cmd->num_args);
 	cmd->next = NULL;
 	delimeter = get_heredoc_delimeter(token);
 	init_heredoc(delimeter);
