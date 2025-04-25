@@ -6,11 +6,44 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 21:58:25 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/24 04:47:47 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/04/24 06:54:14 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
+
+static void	updatewd(t_shell *mini, char *newpwd, char *oldpwd);
+static int	home_error(char *msg);
+static char	*handel_tilde(t_shell *mini, char *home);
+
+int	builtin_cd(t_shell *mini)
+{
+	char	*home;
+	char	*dir;
+	char	*oldpwd;
+
+	oldpwd = getcwd(NULL, 0);
+	home = extract_env_value(mini->initenv, "HOME");
+	dir = NULL;
+	if (!home)
+		return (home_error("cd: HOME not set\n"));
+	if (!mini->cmds->args[1])
+		dir = home;
+	else
+	{
+		if ((ft_strncmp("~", mini->cmds->args[1], 1) == 0))
+			dir = handel_tilde(mini, home);
+		else
+		{
+			dir = ft_strjoin(getcwd(NULL, 0), "/");
+			dir = ft_strjoin(dir, mini->cmds->args[1]);
+		}
+	}
+	if (chdir(dir))
+		return (chdir_error(mini));
+	updatewd(mini, getcwd(NULL, 0), oldpwd);
+	return (0);
+}
 
 static void	updatewd(t_shell *mini, char *newpwd, char *oldpwd)
 {
@@ -19,7 +52,7 @@ static void	updatewd(t_shell *mini, char *newpwd, char *oldpwd)
 	env = mini->initenv->env;
 	while (env)
 	{
-        if (ft_strncmp("PWD", env->name, 3) == 0)
+		if (ft_strncmp("PWD", env->name, 3) == 0)
 		{
 			free(env->value);
 			env->value = ft_strdup(newpwd);
@@ -33,113 +66,26 @@ static void	updatewd(t_shell *mini, char *newpwd, char *oldpwd)
 	}
 }
 
-int	builtin_cd(t_shell *mini)
+static int	home_error(char *msg)
 {
-	char	*home;
+	ft_putstr_fd(msg, 2);
+	return (1);
+}
+
+static char	*handel_tilde(t_shell *mini, char *home)
+{
 	char	*dir;
-	char	*oldpwd;
 
-	oldpwd = getcwd(NULL, 0);
-	home = extract_env_value(mini->initenv, "HOME");
 	dir = NULL;
-	if (!home)
-	{
-		ft_putstr_fd("cd: HOME not set\n", 2);
-		return (1);
-	}
-	if (!mini->cmds->args[1])
-		chdir(home);
+	if (mini->cmds->args[1] && !mini->cmds->args[1][1])
+		dir = home;
 	else
-	{
-		if ((ft_strncmp("~", mini->cmds->args[1], 1) == 0))
-		{
-			if (mini->cmds->args[1] && !mini->cmds->args[1][1])
-				dir = home;
-			else
-			{
-				dir = ft_strjoin(home, ft_strchr(mini->cmds->args[1], '~') + 1);
-			}
-		}
-		else
-		{
-			dir = ft_strjoin(getcwd(NULL, 0), "/");
-			dir = ft_strjoin(dir, mini->cmds->args[1]);
-		}
-		if (chdir(dir))
-		{
-			printf("cd: %s: No such file or directory\n", mini->cmds->args[1]);
-			return (1);
-		}
-	}
-	updatewd(mini, getcwd(NULL, 0), oldpwd);
-	return (0);
+		dir = ft_strjoin(home, ft_strchr(mini->cmds->args[1], '~') + 1);
+	return (dir);
 }
 
-int	builtin_env(t_shell *mini)
+static int	chdir_error(t_shell *mini)
 {
-	t_env	*temp;
-
-	temp = mini->initenv->env;
-	if (!mini->cmds->args[1])
-	{
-		while (temp)
-		{
-			printf("%s", temp->name);
-			printf("=");
-			printf("%s\n", temp->value);
-			temp = temp->next;
-		}
-		return (0);
-	}
-	else
-		return (1);
-}
-
-int	builtin_pwd(void)
-{
-	char	*pwd;
-
-	pwd = getcwd(NULL, 0);
-	printf("%s\n", pwd);
-	return (2);
-}
-
-int	check_builtin(t_shell *mini)
-{
-	char	*cmd;
-
-	cmd = mini->cmds->cmd;
-    if (mini->cmds->cmd)
-    {
-	    if (ft_strncmp("cd", cmd, sizeof(cmd)) == 0)
-	    {
-	    	if (builtin_cd(mini))
-				return (1);
-			else
-				return (2);
-	    }
-	    if (ft_strncmp("env", cmd, sizeof(cmd)) == 0)
-	    {
-	    	if (builtin_env(mini))
-		    	return (1);
-			else
-				return (2);
-	    }
-		if (ft_strncmp("pwd", cmd, sizeof(cmd)) == 0)
-			printf("%s\n", getcwd(NULL, 0));
-		if (ft_strncmp("exit", cmd, sizeof(cmd)) == 0)
-		{
-			printf("exit\n");
-			clear_and_exit(mini);
-			exit (mini->status);
-		}
-		if (ft_strncmp("unset", cmd, sizeof(cmd)) == 0)
-		{
-			builtin_unset(mini, mini->cmds->args);
-			return (0);
-		}
-	    else
-		    return (0);
-    }
-	return (0);
+	printf("cd: %s: No such file or directory\n", mini->cmds->args[1]);
+	return (1);
 }
