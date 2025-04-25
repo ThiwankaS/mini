@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 21:58:25 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/24 06:54:14 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/04/25 05:42:04 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void	updatewd(t_shell *mini, char *newpwd, char *oldpwd);
 static int	home_error(char *msg);
+static int	chdir_error(t_shell *mini);
 static char	*handel_tilde(t_shell *mini, char *home);
 
 int	builtin_cd(t_shell *mini)
