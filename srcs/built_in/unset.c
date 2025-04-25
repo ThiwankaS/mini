@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 04:48:57 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/25 05:36:44 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/04/25 05:42:48 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	builtin_unset(t_shell *mini, char **unset)
 
 	i = 1;
 	if (!unset)
-		return ;
+		return (1);
 	while (unset[i])
 		remove_env_nodes(mini, unset[i++]);
 	return (0);
