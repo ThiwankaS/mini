@@ -6,15 +6,15 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:22:27 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/23 22:01:19 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/04/29 02:35:50 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
 
-static void	init_mini_shell(t_shell *mini, t_initenv *env);
+static void	init_mini_shell(t_shell *mini, char **envp);
 
-int	activate_shell(char *input, t_initenv *env)
+int	activate_shell(char *input, char **envp)
 {
 	int		status;
 	t_shell	*mini;
@@ -23,7 +23,7 @@ int	activate_shell(char *input, t_initenv *env)
 	mini = malloc(sizeof(t_shell));
 	if (!mini)
 		return (1);
-	init_mini_shell(mini, env);
+	init_mini_shell(mini, envp);
 	status = input_validate(&input);
 	if (status)
 		return (status);
@@ -42,8 +42,11 @@ int	activate_shell(char *input, t_initenv *env)
 	return (status);
 }
 
-static void	init_mini_shell(t_shell *mini, t_initenv *env)
+static void	init_mini_shell(t_shell *mini, char **envp)
 {
+	t_initenv	*env;
+
+	init_env(&env, envp);
 	mini->num_cmds = 0;
 	mini->tokens = NULL;
 	mini->cmds = NULL;

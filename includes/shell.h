@@ -68,9 +68,13 @@ typedef struct s_shell
 } t_shell;
 
 /**
- * Implementaion in main.c
+ * Implementation in srcs/main.c
 */
-void print(t_list *list, char *msg);
+
+/**
+ * Implementaion in srcs/utils/helper.c
+*/
+int	activate_shell(char *input, char **envp);
 
 /**
  * Implementaion in srcs/validate.c
@@ -82,11 +86,6 @@ int 	input_validate(char **input);
  * Implementaion in srcs/error.c
 */
 int syntax_error(char *input, char *msg, int code);
-
-/**
- * Implementation in srcs/helper.c
-*/
-int 	activate_shell(char *input, t_initenv *env);
 
 /**
  * Implementation in srcs/token.c
@@ -105,6 +104,7 @@ int		ft_isquote(int c);
 int		ft_skip_quoted(char *token, int *index);
 int		get_num_args(char *token);
 char **set_arg_array(char *token, int size);
+int	ft_isquote(int c);
 
 /**
  * Implementaion in srcs/utils.c
@@ -158,6 +158,10 @@ int		builtin_exit(t_shell *mini);
 int		builtin_pwd(void);
 int		builtin_cd(t_shell *mini);
 int		builtin_env(t_shell *mini);
+
+
+bool is_char_in_quotes(const char *str, char c);
+void	init_env(t_initenv **initenv, char **envp);
 
 
 t_env	*new_node(char *content);
