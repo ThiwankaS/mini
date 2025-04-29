@@ -6,17 +6,19 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 22:00:03 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/29 16:53:07 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/04/29 18:28:27 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
 
 static void expand(t_shell *mini, t_list *list);
+static void parse(t_shell *mini, t_list *list);
 
 int parse_and_expand(t_shell *mini)
 {
 	expand(mini, mini->tokens);
+	parse(mini, mini->tokens);
 	if (mini->cmds->cmd)
 	{
 		if(!mini->cmds->command || builtin_cmd(mini->cmds->cmd))
@@ -33,6 +35,26 @@ int parse_and_expand(t_shell *mini)
 static void expand(t_shell *mini, t_list *list)
 {
 	t_list	*current;
+	char	*expanded;
+
+	current = list;
+	expanded = NULL;
+	while (current)
+	{
+		if (ft_strchr(current->token, '$'))
+		{
+			expanded = handle_dollar(mini, current->token);
+			free(current->token);
+			current->token = expanded;
+			expanded = NULL;
+		}
+		current = current->next;
+	}
+}
+
+static void parse(t_shell *mini, t_list *list)
+{
+	t_list	*current;
 	t_cmd	*cmd;
 
 	current = list;
@@ -41,8 +63,6 @@ static void expand(t_shell *mini, t_list *list)
 	{
 		if (enclosed_in_quotes(current->token))
 			cmd = handle_quoted(mini, current->token);
-		else if (ft_strchr(current->token, '$'))
-			cmd = handle_dollar(current, mini);
 		else if (ft_strchr(current->token, '>'))
 			cmd = handel_output(mini, current->token);
 		else if (ft_strchr(current->token, '<'))
@@ -55,7 +75,7 @@ static void expand(t_shell *mini, t_list *list)
 		current = current->next;
 	}
 }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+
 char **set_arg_array(char *token, int size)
 {
 	int		i;

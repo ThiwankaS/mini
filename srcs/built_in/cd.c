@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 21:58:25 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/25 05:42:04 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/04/29 17:50:11 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	builtin_cd(t_shell *mini)
 	char	*oldpwd;
 
 	oldpwd = getcwd(NULL, 0);
-	home = extract_env_value(mini->initenv, "HOME");
+	home = ft_getenv(mini, "HOME");
 	dir = NULL;
 	if (!home)
 		return (home_error("cd: HOME not set\n"));

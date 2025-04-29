@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 21:59:18 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/23 21:59:29 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/04/29 17:48:33 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,18 +100,18 @@ char	**copy_env(t_env *env)
  * custome implementaion of getenv() library function
 */
 
-char	*extract_env_value(t_initenv *initenv, char *name)
+char	*ft_getenv(t_shell *mini, char *name)
 {
-	t_env	*temp;
+	t_env	*local;
 
-	temp = initenv->env;
-	while (temp)
+	local = mini->initenv->env;
+	while (local)
 	{
-		if (ft_strncmp(name, temp->name, sizeof(name)) == 0)
-			return (temp->value);
-		temp = temp->next;
+		if (ft_strncmp(name, local->name, sizeof(name)) == 0)
+			return (local->value);
+		local = local->next;
 	}
-	return ("");
+	return (NULL);
 }
 
 /**

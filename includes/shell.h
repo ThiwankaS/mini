@@ -104,17 +104,18 @@ int		extract_tokens(t_list **tokens, char *input);
 */
 int		parse_and_expand(t_shell *mini);
 t_cmd	*handel_simpel(t_shell *mini, t_list *current);
-t_cmd *handle_dollar(t_list *list, t_shell *mini);
+char *handle_dollar(t_shell *mini, char *token);
 t_cmd *handel_output(t_shell *mini, char *token);
 t_cmd *handel_input(t_shell *mini, char *token);
 t_cmd *handle_heredoc(t_shell *mini, t_cmd *cmd, char *token);
-
+bool in_single_quotes(const char *str, int index);
 char	*ft_extract_word(char *token, int *index);
 int		ft_isquote(int c);
 int		ft_skip_quoted(char *token, int *index);
 int		get_num_args(char *token);
 char **set_arg_array(char *token, int size);
-int	ft_isquote(int c);
+int ft_isquote(int c);
+char *ft_getenv(t_shell *mini, char *name);
 
 /**
  * Implementaion in srcs/utils.c
@@ -177,7 +178,7 @@ t_env	*new_node(char *content);
 void	add_to_list(t_env **env, char *content);
 void	list_env(t_env **env, char **envp);
 char	**copy_env(t_env *env);
-char	*extract_env_value(t_initenv *initenv, char *name);
+//char	*extract_env_value(t_initenv *initenv, char *name);
 
 int		check_builtin(t_shell *mini);
 int		ft_arraylen(char **envp);
