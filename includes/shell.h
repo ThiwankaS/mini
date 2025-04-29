@@ -81,7 +81,7 @@ int	activate_shell(t_shell *mini, char *input, char **envp);
  * Implementaion in srcs/validate
 */
 int		input_validate(char **input);
-bool	ft_isquoted(const char *str, char c);
+bool	ft_isquoted(const char *str, int n);
 int check_output_character(char *input);
 int check_input_character(char *input);
 int	check_pipe_character(char *input);

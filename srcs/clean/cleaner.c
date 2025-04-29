@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 12:48:20 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/23 21:58:10 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/04/29 14:33:59 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int	clear_commands(t_cmd *cmds)
 	{
 		cmd = current;
 		current = current->next;
-		free(cmd->command);
+		if (cmd->command)
+			free(cmd->command);
 	}
 	return (0);
 }
@@ -48,7 +49,8 @@ int	clear_tokens(t_list *tokens)
 	{
 		token = current;
 		current = current->next;
-		free(token);
+		if (token)
+			free(token);
 	}
 	return (0);
 }

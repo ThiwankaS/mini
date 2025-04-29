@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 22:02:00 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/29 04:46:19 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/04/29 13:18:12 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ int input_validate(char **input);
 static void input_preprocess(char **input);
 static int check_properly_enclosed(char *input);
 static int check_special_character(char *input);
-static int check_output_character(char *input);
-static int check_input_character(char *input);
 static char *remove_comments(char *input);
 
 int input_validate(char **input)
@@ -26,7 +24,9 @@ int input_validate(char **input)
 	if(check_properly_enclosed(*input))
 		return (syntax_error(*input ,"Sysntax Error : unclosed quotes !", 2));
 	if(check_special_character(*input))
-		return (syntax_error(*input ,"Sysntax Error : unrecognized characters !", 1));
+		return (syntax_error(*input ,"Sysntax Error : unrecognized characters !", 2));
+	if(check_pipe_character(*input))
+		return (syntax_error(*input ,"Sysntax Error : syntax error near token '|'!", 2));
 	if(check_output_character(*input))
 		return (syntax_error(*input ,"Sysntax Error : syntax error near token '>'!", 2));
 	if(check_input_character(*input))
@@ -38,7 +38,7 @@ static void input_preprocess(char **input)
 {
 	char *trimmed;
 
-	trimmed = ft_strtrim(remove_comments(*input), " \f\n\r\t\v");
+	trimmed = ft_strtrim(remove_comments(*input), ISSPACE);
 	*input = ft_strdup(trimmed);
 	free(trimmed);
 }
@@ -87,96 +87,6 @@ static int check_special_character(char *input)
 				return (1);
 		}
 		i++;
-	}
-	return (0);
-}
-
-static int check_output_character(char *input)
-{
-	int i = 0;
-	char *str = ft_strchr(input, '>');
-	if(str)
-	{
-		if(str[i + 1] && !ft_isspace(str[i + 1]))
-			{
-				i++;
-				if(str[i] == '>')
-				{
-					if(str[i + 1] && !ft_isspace(str[i + 1]))
-					{
-						i++;
-						if(str[i] == '>')
-							return (1);
-						return (0);
-					}
-					else if(str[i + 1] && ft_isspace(str[i + 1]))
-					{
-						i++;
-						while(str[i] && ft_isspace(str[i]))
-							i++;
-						if(str[i] == '\0' || str[i] == '>')
-							return (1);
-						return (0);
-					}
-					return (1);
-				}
-				return (0);
-			}
-			else if(str[i + 1] && ft_isspace(str[i + 1]))
-			{
-				i++;
-				while(str[i] && ft_isspace(str[i]))
-					i++;
-				if(str[i] == '\0' || str[i] == '>')
-					return (1);
-				return (0);
-			}
-		return (1);
-	}
-	return (0);
-}
-
-static int check_input_character(char *input)
-{
-	int i = 0;
-	char *str = ft_strchr(input, '<');
-	if(str)
-	{
-		if(str[i + 1] && !ft_isspace(str[i + 1]))
-			{
-				i++;
-				if(str[i] == '<')
-				{
-					if(str[i + 1] && !ft_isspace(str[i + 1]))
-					{
-						i++;
-						if(str[i] == '<')
-							return (1);
-						return (0);
-					}
-					else if(str[i + 1] && ft_isspace(str[i + 1]))
-					{
-						i++;
-						while(str[i] && ft_isspace(str[i]))
-							i++;
-						if(str[i] == '\0' || str[i] == '<')
-							return (1);
-						return (0);
-					}
-					return (1);
-				}
-				return (0);
-			}
-			else if(str[i + 1] && ft_isspace(str[i + 1]))
-			{
-				i++;
-				while(str[i] && ft_isspace(str[i]))
-					i++;
-				if(str[i] == '\0' || str[i] == '<')
-					return (1);
-				return (0);
-			}
-		return (1);
 	}
 	return (0);
 }

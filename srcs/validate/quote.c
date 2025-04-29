@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 22:01:44 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/29 04:29:30 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/04/29 13:58:57 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	ft_skip_quoted(char *token, int *index)
 	return (1);
 }
 
-bool	ft_isquoted(const char *str, char c)
+bool	ft_isquoted(const char *str, int n)
 {
 	bool	in_single;
 	bool	in_double;
@@ -69,7 +69,7 @@ bool	ft_isquoted(const char *str, char c)
 	in_single = false;
 	in_double = false;
 	i = 0;
-	while (str && str[i] && str[i] != c)
+	while (str && str[i] && i != n)
 	{
 		if (str[i] == '\'' && !in_double)
 			in_single = !in_single;

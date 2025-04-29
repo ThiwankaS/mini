@@ -37,6 +37,9 @@ SRCS = \
 	srcs/utils/error.c\
 	srcs/utils/helper.c\
 	srcs/utils/utils.c\
+	srcs/validate/check_input.c\
+	srcs/validate/check_output.c\
+	srcs/validate/check_pipe.c\
 	srcs/validate/quote.c\
 	srcs/validate/validate.c\
 	main.c\

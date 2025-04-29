@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 21:40:50 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/29 13:43:53 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/04/29 14:38:20 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ int	ft_stealth_mode(t_shell	*mini, char **envp)
 			continue ;
 		}
 		status = activate_shell(mini, input, envp);
-		free(input);
+		if (input)
+			free(input);
 	}
 	return (status);
 }
@@ -73,8 +74,8 @@ int	ft_interactive_mode(t_shell	*mini, char **envp)
 		input = readline("@so_thiwanka > ");
 		if (!input)
 		{
-			clear_and_exit(mini);
-			free(input);
+			if (mini)
+				clear_and_exit(mini);
 			break ;
 		}
 		if (ft_isempty(input))
@@ -84,7 +85,8 @@ int	ft_interactive_mode(t_shell	*mini, char **envp)
 		}
 		add_history(input);
 		status = activate_shell(mini, input, envp);
-		free(input);
+		if (input)
+			free(input);
 	}
 	return (status);
 }
