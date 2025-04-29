@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 22:00:03 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/25 21:28:44 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/04/29 04:14:56 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void expand(t_shell *mini, t_list *list)
 	while(current)
 	{
 		handle_dollar(current, mini);
-		if(check_if_quoted(current->token))
+		if(enclosed_in_quotes(current->token))
 			cmd = handle_quoted(mini, current->token);
 		else if(ft_strchr(current->token, '>'))
 			cmd = handel_output(mini, current->token);
@@ -250,24 +250,4 @@ char	*ft_extract_word(char *token, int *index)
 	return (word);
 }
 
-int	ft_isquote(int c)
-{
-	if (c == '\'' || c == '"')
-		return (1);
-	return (0);
-}
 
-int	ft_skip_quoted(char *token, int *index)
-{
-	int		i;
-	char	quote_char;
-
-	i = *index;
-	quote_char = token[i++];
-	while (token[i] && token[i] != quote_char)
-		i++;
-	if (token[i] == quote_char)
-		i++;
-	*index = i;
-	return (1);
-}

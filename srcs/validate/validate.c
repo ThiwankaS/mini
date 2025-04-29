@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 22:02:00 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/23 22:02:02 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/04/29 04:46:19 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ int input_validate(char **input)
 	if(check_special_character(*input))
 		return (syntax_error(*input ,"Sysntax Error : unrecognized characters !", 1));
 	if(check_output_character(*input))
-		return (syntax_error(*input ,"Sysntax Error : syntax error near token '>'!", 1));
+		return (syntax_error(*input ,"Sysntax Error : syntax error near token '>'!", 2));
 	if(check_input_character(*input))
-		return (syntax_error(*input ,"Sysntax Error : syntax error near token '<'!", 1));
+		return (syntax_error(*input ,"Sysntax Error : syntax error near token '<'!", 2));
 	return (0);
 }
 
