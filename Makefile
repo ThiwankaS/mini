@@ -31,6 +31,7 @@ SRCS = \
 	srcs/parse/input.c\
 	srcs/parse/parser.c\
 	srcs/parse/redirect.c\
+	srcs/parse/simple.c\
 	srcs/parse/surround.c\
 	srcs/signal/signal.c\
 	srcs/tokenize/token.c\

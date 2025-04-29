@@ -103,7 +103,7 @@ int		extract_tokens(t_list **tokens, char *input);
  * Implementation in srcs/parser.c
 */
 int		parse_and_expand(t_shell *mini);
-t_cmd	*handel_pipe(t_shell *mini, t_list *current);
+t_cmd	*handel_simpel(t_shell *mini, t_list *current);
 char	*ft_extract_word(char *token, int *index);
 int		ft_isquote(int c);
 int		ft_skip_quoted(char *token, int *index);

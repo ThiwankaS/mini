@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:37:44 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/29 01:15:17 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/04/29 16:02:49 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	extract_tokens(t_list **tokens, char *input)
 	while (input && input[i])
 	{
 		token = get_token(input, &i);
-		*tokens = list_add_back(*tokens, ft_strtrim(token, " "));
+		*tokens = list_add_back(*tokens, ft_strtrim(token, ISSPACE));
 		i++;
 	}
 	return (0);
