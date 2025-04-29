@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 21:40:50 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/26 02:35:57 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/04/29 03:30:26 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,45 +14,69 @@
 
 volatile sig_atomic_t	g_sig = 0;
 
-void	init_env(t_initenv **initenv, char **envp)
-{
-	*initenv = malloc(sizeof(t_initenv));
-	(*initenv)->copy_env = NULL;
-	(*initenv)->env = NULL;
-	list_env(&(*initenv)->env, envp);
-}
+static int	ft_stealth_mode(char **envp);
+static int	ft_interactive_mode(char **envp);
 
 int	main(int ac, char **av, char **envp)
 {
-	char		*input;
-	int			status;
-	t_initenv	*initenv;
+	int		status;
 
-	initenv = NULL;
-	status = 0;
+	status = 1;
 	(void)av;
 	if (ac == 1)
 	{
 		init_sig();
-		init_env(&initenv, envp);
-		while (1)
+		if (isatty(STDIN_FILENO))
 		{
-			input = readline(isatty(STDIN_FILENO) ? "minishell> " : NULL);
-			if (!input)
-			{
-				if (isatty(STDIN_FILENO))
-					write(STDIN_FILENO, "exit", 5);
-				break;
-			}
-			if (ft_isempty(input))
-			{
-				free(input);
-				continue ;
-			}
-			add_history(input);
-			status = activate_shell(input, initenv);
-			free(input);
+			status = ft_interactive_mode(envp);
 		}
+		else
+		{
+			status = ft_stealth_mode(envp);
+		}
+	}
+	return (status);
+}
+
+int	ft_stealth_mode(char **envp)
+{
+	char	*input;
+	int		status;
+
+	while (true)
+	{
+		input = readline(NULL);
+		if (!input)
+			break ;
+		if (ft_isempty(input))
+		{
+			free(input);
+			continue ;
+		}
+		status = activate_shell(input, envp);
+		free(input);
+	}
+	return (status);
+}
+
+int	ft_interactive_mode(char **envp)
+{
+	char	*input;
+	int		status;
+
+	while (true)
+	{
+		input = readline("@so_thiwanka > ");
+		if (!input)
+			break ;
+		if (ft_isempty(input))
+		{
+			free(input);
+			continue ;
+		}
+		add_history(input);
+		status = activate_shell(input, envp);
+		free(input);
 	}
 	return (status);
 }
