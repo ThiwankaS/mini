@@ -24,12 +24,14 @@ SRCS = \
 	srcs/built_in/export.c\
 	srcs/built_in/exit.c\
 	srcs/clean/cleaner.c\
+	srcs/env/handel_env.c\
 	srcs/execute/execute.c\
 	srcs/parse/envrn.c\
 	srcs/parse/heredoc.c\
 	srcs/parse/input.c\
 	srcs/parse/parser.c\
 	srcs/parse/redirect.c\
+	srcs/parse/surround.c\
 	srcs/signal/signal.c\
 	srcs/tokenize/token.c\
 	srcs/utils/error.c\
