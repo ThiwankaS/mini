@@ -6,58 +6,76 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 22:01:44 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/26 02:35:42 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/04/29 04:29:30 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
 
-t_cmd *handle_quoted(t_shell *mini, char *token)
+char	*enclosed_in_quotes(char *input)
 {
-	t_cmd *cmd = malloc(sizeof(t_cmd));
-	if(!cmd)
-		return (NULL);
-	cmd->cmd = get_command(token);
-	cmd->type = SMPL_CMD;
-	cmd->command = set_path_name(mini, token);
-	cmd->num_args = 2;
-	cmd->filename = NULL;
-	cmd->args = set_arg_array(token, cmd->num_args);
-	cmd->next = NULL;
-	return (cmd);
-}
+	int		len;
+	char	*str;
 
-char *enclosed_in_quotes(char *input)
-{
-	char *str = NULL;
-	int len = ft_strlen(input);
-
+	str = NULL;
+	len = ft_strlen(input);
 	str = ft_strnstr(input, "'", len);
-	if(str)
+	if (str)
 		return (str);
 	str = ft_strnstr(input, "\"", len);
-	if(str)
+	if (str)
 		return (str);
 	return (str);
 }
 
-int check_if_quoted(char *input)
+char	*remove_quotes(char *str)
 {
-	int len = ft_strlen(input);
+	int		len;
+	char	*res;
 
-	if(len == 0)
-		return (0);
-	else if(input[0] == '\'' && input[len-1] == '\'')
-		return (1);
-	else if(input[0] == '"' && input[len-1] == '"')
-		return (1);
-	else
-		return (0);
+	len = ft_strlen(str);
+	res = ft_strnmdup(str, 1, len - 1);
+	return (res);
 }
 
-char *remove_quotes(char *str)
+int	ft_isquote(int c)
 {
-	int len = ft_strlen(str);
-	char *res = ft_strnmdup(str, 1, len - 1);
-	return (res);
+	if (c == '\'' || c == '"')
+		return (1);
+	return (0);
+}
+
+int	ft_skip_quoted(char *token, int *index)
+{
+	int		i;
+	char	quote_char;
+
+	i = *index;
+	quote_char = token[i++];
+	while (token[i] && token[i] != quote_char)
+		i++;
+	if (token[i] == quote_char)
+		i++;
+	*index = i;
+	return (1);
+}
+
+bool	ft_isquoted(const char *str, char c)
+{
+	bool	in_single;
+	bool	in_double;
+	int		i;
+
+	in_single = false;
+	in_double = false;
+	i = 0;
+	while (str && str[i] && str[i] != c)
+	{
+		if (str[i] == '\'' && !in_double)
+			in_single = !in_single;
+		else if (str[i] == '"' && !in_single)
+			in_double = !in_double;
+		i++;
+	}
+	return (in_single || in_double);
 }

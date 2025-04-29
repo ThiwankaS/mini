@@ -72,14 +72,15 @@ typedef struct s_shell
 */
 
 /**
- * Implementaion in srcs/utils/helper.c
+ * Implementaion in srcs/utils
 */
 int	activate_shell(char *input, char **envp);
 
 /**
- * Implementaion in srcs/validate.c
+ * Implementaion in srcs/validate
 */
-int 	input_validate(char **input);
+int		input_validate(char **input);
+bool	ft_isquoted(const char *str, char c);
 //char 	*in_quotes(char *input);
 
 /**
