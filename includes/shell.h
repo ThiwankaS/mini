@@ -93,17 +93,22 @@ int	check_pipe_character(char *input);
 int syntax_error(char *input, char *msg, int code);
 
 /**
- * Implementation in srcs/token.c
+ * Implementation in srcs/token
 */
 t_list	*list_add_back(t_list *list, char *str);
 t_cmd	*list_add_command(t_cmd *cmds, t_cmd *node);
 int		extract_tokens(t_list **tokens, char *input);
 
 /**
- * Implementation in srcs/parser.c
+ * Implementation in srcs/parser
 */
 int		parse_and_expand(t_shell *mini);
 t_cmd	*handel_simpel(t_shell *mini, t_list *current);
+t_cmd *handle_dollar(t_list *list, t_shell *mini);
+t_cmd *handel_output(t_shell *mini, char *token);
+t_cmd *handel_input(t_shell *mini, char *token);
+t_cmd *handle_heredoc(t_shell *mini, t_cmd *cmd, char *token);
+
 char	*ft_extract_word(char *token, int *index);
 int		ft_isquote(int c);
 int		ft_skip_quoted(char *token, int *index);
@@ -145,14 +150,13 @@ int set_command_type(char *token);
 /**
  * Implementaion in srcs/input.c
 */
-t_cmd *handel_output(t_shell *mini, char *token);
-t_cmd *handel_input(t_shell *mini, char *token);
+
 
 
 /**
  * Implementaion in srcs/heredoc.c
 */
-t_cmd *handle_heredoc(t_shell *mini, t_cmd *cmd, char *token);
+
 
 /**
  * Implementaion in srcs/buit_in

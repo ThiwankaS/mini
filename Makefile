@@ -26,6 +26,7 @@ SRCS = \
 	srcs/clean/cleaner.c\
 	srcs/env/handel_env.c\
 	srcs/execute/execute.c\
+	srcs/parse/dollar.c\
 	srcs/parse/envrn.c\
 	srcs/parse/heredoc.c\
 	srcs/parse/input.c\

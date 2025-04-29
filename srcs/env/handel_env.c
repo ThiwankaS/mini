@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 05:37:36 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/28 05:38:49 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/04/29 16:47:49 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,3 +20,50 @@ void	init_env(t_initenv **initenv, char **envp)
 	list_env(&(*initenv)->env, envp);
 }
 
+char *set_path_name(t_shell *mini, char *token)
+{
+	(void) mini;
+	//char	**path_dirs;
+	char	*command = get_command(token);
+	char	*path = "/bin/";
+	char 	*cmd = ft_strjoin(path, command);
+	return (cmd);
+	//int		i;
+
+	// i = 0;
+	// command = ft_substr(token, 0, ft_strchr(token, ' ') - token);
+	// path = command;
+	// if (access(path, X_OK) == 0)
+	// 	return (path);
+	// else
+	// 	path = NULL;
+	// char *path_value = extract_env_value(mini->initenv, "PATH");
+	// if (!path_value)
+	// {
+    // 	if (!builtin_cmd(command))
+    // 	    printf("%s: command not found\n", command);
+   	// 	free(command);
+   	// 	return (NULL);
+	// }
+	// path_dirs = ft_split(path_value, ':');
+	// if (!path_dirs)
+    // 	return (NULL);
+	// while (path_dirs && path_dirs[i])
+	// {
+	// 	path = ft_strjoin(path_dirs[i], "/");
+	// 	path = ft_strjoin(path, command);
+	// 	if (!path)
+	// 		return (NULL);
+	// 	if (access(path, X_OK) == 0)
+	// 		return (path);
+	// 	i++;
+	// }
+	// if (access(path, X_OK) == -1)
+	// {
+	// 	if (builtin_cmd(command))
+	// 		return (NULL);
+	// 	else
+	// 		printf("%s: command not found1\n", command);
+	// }
+	// return (NULL);
+}
