@@ -23,6 +23,7 @@
 # define HDRD_CMD 5 // For input heredoc redirect command "<<"
 
 # define CACHE "cache.txt"
+# define ISSPACE " \f\n\t\r\v"
 
 /**
  * data node strucutre to hold the tokens extract from input, this node will make a linked list
@@ -74,13 +75,16 @@ typedef struct s_shell
 /**
  * Implementaion in srcs/utils
 */
-int	activate_shell(char *input, char **envp);
+int	activate_shell(t_shell *mini, char *input, char **envp);
 
 /**
  * Implementaion in srcs/validate
 */
 int		input_validate(char **input);
 bool	ft_isquoted(const char *str, char c);
+int check_output_character(char *input);
+int check_input_character(char *input);
+int	check_pipe_character(char *input);
 //char 	*in_quotes(char *input);
 
 /**

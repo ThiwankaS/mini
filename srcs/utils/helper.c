@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:22:27 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/29 02:35:50 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/04/29 13:42:15 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,11 @@
 
 static void	init_mini_shell(t_shell *mini, char **envp);
 
-int	activate_shell(char *input, char **envp)
+int	activate_shell(t_shell *mini, char *input, char **envp)
 {
 	int		status;
-	t_shell	*mini;
 
 	status = 0;
-	mini = malloc(sizeof(t_shell));
-	if (!mini)
-		return (1);
 	init_mini_shell(mini, envp);
 	status = input_validate(&input);
 	if (status)
