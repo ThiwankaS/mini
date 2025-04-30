@@ -62,6 +62,7 @@ typedef struct s_shell
 {
 	int 		num_cmds;
 	char 		*trim;
+	char		**envp;
 	t_cmd 		*cmds;
 	t_list 		*tokens;
 	t_initenv	*initenv;
@@ -75,7 +76,8 @@ typedef struct s_shell
 /**
  * Implementaion in srcs/utils
 */
-int	activate_shell(t_shell *mini, char *input, char **envp);
+int	activate_shell(t_shell *mini, char *input);
+void	init_mini_shell(t_shell *mini, char **envp);
 
 /**
  * Implementaion in srcs/validate

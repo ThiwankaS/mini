@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 21:40:50 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/29 14:38:20 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/04/30 09:01:37 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 volatile sig_atomic_t	g_sig = 0;
 
-static int	ft_stealth_mode(t_shell	*mini, char **envp);
-static int	ft_interactive_mode(t_shell	*mini, char **envp);
+static int	ft_stealth_mode(t_shell	*mini);
+static int	ft_interactive_mode(t_shell	*mini);
 
 int	main(int ac, char **av, char **envp)
 {
@@ -30,15 +30,20 @@ int	main(int ac, char **av, char **envp)
 	if (ac == 1)
 	{
 		init_sig();
+		init_mini_shell(mini, envp);
 		if (isatty(STDIN_FILENO))
-			status = ft_interactive_mode(mini, envp);
+		{
+			status = ft_interactive_mode(mini);
+		}
 		else
-			status = ft_stealth_mode(mini, envp);
+		{
+			status = ft_stealth_mode(mini);
+		}
 	}
 	return (status);
 }
 
-int	ft_stealth_mode(t_shell	*mini, char **envp)
+int	ft_stealth_mode(t_shell	*mini)
 {
 	char	*input;
 	int		status;
@@ -57,14 +62,14 @@ int	ft_stealth_mode(t_shell	*mini, char **envp)
 			free(input);
 			continue ;
 		}
-		status = activate_shell(mini, input, envp);
+		status = activate_shell(mini, input);
 		if (input)
 			free(input);
 	}
 	return (status);
 }
 
-int	ft_interactive_mode(t_shell	*mini, char **envp)
+int	ft_interactive_mode(t_shell	*mini)
 {
 	char	*input;
 	int		status;
@@ -84,7 +89,7 @@ int	ft_interactive_mode(t_shell	*mini, char **envp)
 			continue ;
 		}
 		add_history(input);
-		status = activate_shell(mini, input, envp);
+		status = activate_shell(mini, input);
 		if (input)
 			free(input);
 	}
