@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 05:37:36 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/29 16:47:49 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/04/30 17:15:36 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	init_env(t_initenv **initenv, char **envp)
 	list_env(&(*initenv)->env, envp);
 }
 
-char *set_path_name(t_shell *mini, char *token)
+char *set_path(t_shell *mini, char *token)
 {
 	(void) mini;
 	//char	**path_dirs;
@@ -28,7 +28,9 @@ char *set_path_name(t_shell *mini, char *token)
 	char	*path = "/bin/";
 	char 	*cmd = ft_strjoin(path, command);
 	return (cmd);
-	//int		i;
+
+}
+//int		i;
 
 	// i = 0;
 	// command = ft_substr(token, 0, ft_strchr(token, ' ') - token);
@@ -66,4 +68,3 @@ char *set_path_name(t_shell *mini, char *token)
 	// 		printf("%s: command not found1\n", command);
 	// }
 	// return (NULL);
-}

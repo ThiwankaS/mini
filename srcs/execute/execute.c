@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 21:59:05 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/30 14:36:16 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/04/30 19:10:30 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int execute(t_shell *mini)
 			if(current->next)
 				dup2(fd[index][1], STDOUT_FILENO);
 			close_fds(fd, limit);
-			//print_cmd(current);
+			print_cmd(current);
 			mini->initenv->copy_env = copy_env(mini->initenv->env);
 			if((execve(current->command, current->args, mini->initenv->copy_env)) == -1)
 				exit(1);

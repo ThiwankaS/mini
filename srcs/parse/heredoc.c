@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:57:23 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/25 19:37:36 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/04/30 17:16:16 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_cmd	*handle_heredoc(t_shell *mini, t_cmd *cmd, char *token)
 	temp = ft_strnmdup(token, 0, str - token);
 	new_token = ft_strtrim(temp, " \f\n\t\v\r");
 	cmd->type = set_command_type(token);
-	cmd->command = set_path_name(mini, new_token);
+	cmd->command = set_path(mini, new_token);
 	cmd->filename = ft_strdup(CACHE);
 	cmd->cmd = get_command(new_token);
 	cmd->num_args = get_num_args(new_token);

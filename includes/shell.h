@@ -76,7 +76,8 @@ typedef struct s_shell
  * Implementaion in srcs/utils
 */
 int	activate_shell(t_shell *mini, char *input);
-void	init_mini_shell(t_shell *mini, char **envp);
+void	init_mini_shell(t_shell **mini, char **envp);
+void init_cmd(t_cmd *cmd);
 
 /**
  * Implementaion in srcs/validate
@@ -194,7 +195,7 @@ t_cmd *handle_quoted(t_shell *mini, char *token);
 char *enclosed_in_quotes(char *input);
 int check_if_quoted(char *input);
 char *remove_quotes(char *str);
-char *set_path_name(t_shell *mini, char *token);
+char *set_path(t_shell *mini, char *token);
 int get_num_args(char *token);
 //char **set_arg_array(int num_args, char *token, char *cmdpath);
 int		ft_lst_len(t_env *env);

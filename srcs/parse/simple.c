@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:23:15 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/30 14:16:26 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/04/30 17:41:59 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@ t_cmd *handel_simpel(t_shell *mini, t_list *current)
 	t_cmd *cmd = malloc(sizeof(t_cmd));
 	if(!cmd)
 			return (NULL);
+	init_cmd(cmd);
 	cmd->type = set_command_type(current->token);
 	cmd->cmd = get_command(current->token);
-	cmd->command = set_path_name(mini, current->token);
+	cmd->command = set_path(mini, current->token);
 	cmd->filename = ft_strdup("");
 	cmd->num_args = get_num_args(current->token);
 	cmd->args = set_arg_array(current->token, cmd->num_args);
@@ -94,5 +95,16 @@ char	*ft_extract_word(char *token, int *index)
 	}
 	*index = i;
 	return (word);
+}
+
+void init_cmd(t_cmd *cmd)
+{
+	cmd->type = 0;
+	cmd->cmd = NULL;
+	cmd->command = NULL;
+	cmd->filename = NULL;
+	cmd->num_args = 0;
+	cmd->args = NULL;
+	cmd->next = NULL;
 }
 

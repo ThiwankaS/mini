@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:37:44 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/29 16:02:49 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/04/30 19:09:22 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,20 @@ int	extract_tokens(t_list **tokens, char *input)
 {
 	int		i;
 	char *token;
+	int	start;
 
 	i = 0;
+	token = NULL;
+	while(input && input[i] && ft_isspace(input[i]))
+		i++;
+	start = i;
 	while (input && input[i])
 	{
-		token = get_token(input, &i);
-		*tokens = list_add_back(*tokens, ft_strtrim(token, ISSPACE));
+		if (!ft_isspace(input[i]))
+		{
+			token = get_token(input, &i);
+			*tokens = list_add_back(*tokens, token);
+		}
 		i++;
 	}
 	return (0);
@@ -33,31 +41,26 @@ int	extract_tokens(t_list **tokens, char *input)
 
 char *get_token(char *input, int *index)
 {
-	int i = *index, start;
-	char quote_char = '\0';
+	int i;
+	int start;
+	char *token;
 
-	while (input[i] && (ft_isspecial(input[i]) || ft_isspace(input[i])))
-		i++;
-	start = i;
-	while (input[i])
+	i = *index;
+	start = *index;
+	token = NULL;
+	while (input && input[i])
 	{
-		if (ft_isquote(input[i]))
+		if (ft_isspecial(input[i]) && !ft_isquoted(input, i))
 		{
-			if (!quote_char)
-				quote_char = input[i];
-			else if (quote_char == input[i])
-				quote_char = '\0';
-			i++;
-		}
-		else if (!quote_char && ft_isspecial(input[i]))
+			token = ft_strnmdup(input, start, i);
 			break;
-		else
-			i++;
-		while (!quote_char && ft_isspace(input[i]) && ft_isquote(input[i + 1]))
-			i++;
+		}
+		i++;
 	}
+	if (input[i] == '\0' && token == NULL)
+		token = ft_strnmdup(input, start, i);
 	*index = i;
-	return ft_strnmdup(input, start, i);
+	return (token);
 }
 
 t_list	*list_add_back(t_list *list, char *str)
