@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:35:14 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/30 06:29:45 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/04/30 10:33:01 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static char *set_value(t_shell *mini, char *token, int *index)
 	start = *index;
 	i = *index;
 	if (token && token[i] == '?')
-	{ 
+	{
 		i++;
 		value = ft_itoa(mini->status);
 	}

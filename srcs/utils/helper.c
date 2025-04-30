@@ -6,32 +6,34 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:22:27 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/30 09:10:39 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/04/30 11:00:53 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
 
+static int set_status_if_error(t_shell *mini, int status);
+
 int	activate_shell(t_shell *mini, char *input)
 {
-	int		status;
+	int status;
 
 	status = 0;
 	status = input_validate(&input);
-	if (status)
+	if (set_status_if_error(mini, status))
 		return (status);
 	status = extract_tokens(&mini->tokens, input);
-	if (status)
+	if (set_status_if_error(mini, status))
 		return (status);
 	status = parse_and_expand(mini);
-	if (status)
+	if (set_status_if_error(mini, status))
 		return (status);
 	status = execute(mini);
-	if (status)
+	if (set_status_if_error(mini, status))
 		return (status);
-	// status = clear_and_exit(mini);
-	// if (status)
-	// 	return (status);
+	status = clear_and_exit(mini);
+	if (set_status_if_error(mini, status))
+		return (status);
 	mini->status = status;
 	return (status);
 }
@@ -47,5 +49,15 @@ void	init_mini_shell(t_shell *mini, char **envp)
 	mini->cmds = NULL;
 	mini->initenv = env;
 	mini->trim = NULL;
-	mini->status = 42;
+	mini->status = 0;
+}
+
+static int set_status_if_error(t_shell *mini, int status)
+{
+	if (status)
+	{
+		mini->status = status;
+		return (status);
+	}
+	return (0);
 }
