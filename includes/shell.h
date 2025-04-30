@@ -61,7 +61,6 @@ typedef struct s_cmd
 typedef struct s_shell
 {
 	int 		num_cmds;
-	char 		*trim;
 	char		**envp;
 	t_cmd 		*cmds;
 	t_list 		*tokens;
@@ -134,7 +133,7 @@ int execute(t_shell *mini);
  * Implementaion in srcs/cleaner.c
 */
 int clear_and_exit(t_shell *mini);
-
+void print_cmd(t_cmd *cmd);
 
 /**
  * Implementaion in srcs/signal.c

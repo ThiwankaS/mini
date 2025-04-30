@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:22:27 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/30 11:00:53 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/04/30 13:45:53 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	init_mini_shell(t_shell *mini, char **envp)
 	mini->tokens = NULL;
 	mini->cmds = NULL;
 	mini->initenv = env;
-	mini->trim = NULL;
 	mini->status = 0;
 }
 

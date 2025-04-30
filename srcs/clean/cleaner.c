@@ -6,53 +6,79 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 12:48:20 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/30 10:52:20 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/04/30 14:43:25 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
 
-int	clear_commands(t_cmd *cmds);
-int	clear_tokens(t_list *tokens);
+int	clear_commands(t_shell *mini);
+int	clear_tokens(t_shell *mini);
 int	clear_array(char **array);
+
+void print_cmd(t_cmd *cmd)
+{
+	int i = 0;
+	printf("type : %d\n", cmd->type);
+	printf("nums : %d\n", cmd->num_args);
+	printf("cmd : %s\n", cmd->cmd);
+	printf("command : %s\n", cmd->command);
+	printf("args : - \n");
+	while(cmd->args[i])
+	{
+		printf("args[%d] : %s\n", i, cmd->args[i]);
+		i++;
+	}
+	printf("filename : %s\n", cmd->filename);
+}
 
 int	clear_and_exit(t_shell *mini)
 {
-	(void)mini;
-	// clear_commands(mini->cmds);
-	// clear_tokens(mini->tokens);
+	clear_commands(mini);
+	clear_tokens(mini);
+	mini->num_cmds = 0;
 	return (0);
 }
 
-int	clear_commands(t_cmd *cmds)
+int	clear_commands(t_shell *mini)
 {
 	t_cmd	*current;
-	t_cmd	*cmd;
+	t_cmd	*temp;
 
-	current = cmds;
+	current = mini->cmds;
 	while (current)
 	{
-		cmd = current;
+		temp = current;
 		current = current->next;
-		if (cmd->command)
-			free(cmd->command);
+		if (temp->command)
+			free(temp->command);
+		if (temp->cmd)
+			free(temp->cmd);
+		if (temp->filename)
+			free(temp->filename);
+		if (temp->args)
+			clear_array(temp->args);
+		free(temp);
 	}
+	mini->cmds = NULL;
 	return (0);
 }
 
-int	clear_tokens(t_list *tokens)
+int	clear_tokens(t_shell *mini)
 {
 	t_list	*current;
-	t_list	*token;
+	t_list	*temp;
 
-	current = tokens;
+	current = mini->tokens;
 	while (current)
 	{
-		token = current;
+		temp = current;
 		current = current->next;
-		if (token)
-			free(token);
+		if (temp->next)
+			free(temp->token);
+		free(temp);
 	}
+	mini->tokens = NULL;
 	return (0);
 }
 

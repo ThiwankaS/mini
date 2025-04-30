@@ -6,38 +6,38 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 22:00:03 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/29 18:28:27 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/04/30 14:10:50 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
 
-static void expand(t_shell *mini, t_list *list);
+static void expand(t_shell *mini);
 static void parse(t_shell *mini, t_list *list);
 
 int parse_and_expand(t_shell *mini)
 {
-	expand(mini, mini->tokens);
+	expand(mini);
 	parse(mini, mini->tokens);
-	if (mini->cmds->cmd)
-	{
-		if(!mini->cmds->command || builtin_cmd(mini->cmds->cmd))
-		{
-			if (check_builtin(mini) == 2)
-				return (2);
-			else
-				return (1);
-		}
-	}
+	// if (mini->cmds->cmd)
+	// {
+	// 	if(!mini->cmds->command || builtin_cmd(mini->cmds->cmd))
+	// 	{
+	// 		if (check_builtin(mini) == 2)
+	// 			return (2);
+	// 		else
+	// 			return (1);
+	// 	}
+	// }
 	return (0);
 }
 
-static void expand(t_shell *mini, t_list *list)
+static void expand(t_shell *mini)
 {
 	t_list	*current;
 	char	*expanded;
 
-	current = list;
+	current = mini->tokens;
 	expanded = NULL;
 	while (current)
 	{

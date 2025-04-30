@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 22:01:27 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/23 22:06:07 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/04/30 13:59:43 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,6 @@ void print_args(char **args, int size)
 	{
 		printf("args[%d] : %s\n", i, args[i]);
 		i++;
-	}
-}
-
-void print_cmd(t_cmd *cmd)
-{
-	t_cmd *current = cmd;
-	while(current)
-	{
-		printf("command : %s\n", current->command);
-		printf("args : \n");
-		print_args(current->args, current->num_args);
-		current = current->next;
 	}
 }
 
