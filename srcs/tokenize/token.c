@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:37:44 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/30 19:09:22 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/04/30 20:57:57 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,11 @@ int	extract_tokens(t_list **tokens, char *input)
 {
 	int		i;
 	char *token;
-	int	start;
 
 	i = 0;
 	token = NULL;
 	while(input && input[i] && ft_isspace(input[i]))
 		i++;
-	start = i;
 	while (input && input[i])
 	{
 		if (!ft_isspace(input[i]))

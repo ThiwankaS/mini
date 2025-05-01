@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 05:37:36 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/30 17:15:36 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/04/30 21:44:21 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,12 @@ void	init_env(t_initenv **initenv, char **envp)
 char *set_path(t_shell *mini, char *token)
 {
 	(void) mini;
-	//char	**path_dirs;
+	//char	*dir;
 	char	*command = get_command(token);
 	char	*path = "/bin/";
 	char 	*cmd = ft_strjoin(path, command);
+	//dir = getcwd(NULL, 0);
+	//printf("path : %s\n", dir);
 	return (cmd);
 
 }

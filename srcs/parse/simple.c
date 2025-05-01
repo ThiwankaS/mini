@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:23:15 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/30 17:41:59 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/05/01 06:34:47 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ char *get_command(char *token)
 
 int get_num_args(char *token)
 {
-	int		i;
-	int		count;
+	int	i;
+	int	count;
 
 	i = 0;
 	count = 0;
@@ -54,14 +54,10 @@ int get_num_args(char *token)
 			i++;
 		if (token[i] == '\0')
 			break ;
-		count++;
-		if (ft_isquote(token[i]))
-			ft_skip_quoted(token, &i);
-		else
-		{
-			while (token[i] && !ft_isspace(token[i]) && !ft_isquote(token[i]))
-				i++;
-		}
+		if (!ft_isquoted(token, i))
+			count++;
+		while (token[i] && !ft_isspace(token[i]))
+			i++;
 	}
 	return (count);
 }
