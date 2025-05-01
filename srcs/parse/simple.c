@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:23:15 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/05/01 06:34:47 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/05/01 07:39:31 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,29 @@ t_cmd *handel_simpel(t_shell *mini, t_list *current)
 
 char *get_command(char *token)
 {
-	char	*cmd;
 	int		i;
+	int		start;
+	char	*cmd;
+	char	quote_char;
 
 	i = 0;
 	cmd = NULL;
-	if (!token)
-		return (cmd);
-	cmd = ft_extract_word(token, &i);
+	while (token && ft_isspace(token[i]))
+		i++;
+	start = i;
+	if (token && ft_isquote(token[i]))
+	{
+		quote_char = token[i];
+		while (token && token[i] && token[i] != quote_char)
+			i++;
+		cmd = ft_strnmdup(token, start + 1, i - 1);
+	}
+	else
+	{
+		while (token && token[i] && !ft_isspace(token[i]))
+			i++;
+		cmd = ft_strnmdup(token, start, i);
+	}
 	return (cmd);
 }
 
@@ -70,22 +85,20 @@ char	*ft_extract_word(char *token, int *index)
 	char	quote_char;
 
 	i = *index;
-	while (ft_isspace(token[i]))
+	word = NULL;
+	while (token[i] && ft_isspace(token[i]))
 		i++;
 	start = i;
 	if (ft_isquote(token[i]))
 	{
-		quote_char = token[i++];
-		start = i;
+		quote_char = token[i];
 		while (token[i] && token[i] != quote_char)
 			i++;
-		word = ft_strnmdup(token, start, i);
-		if (token[i] == quote_char)
-			i++;
+		word = ft_strnmdup(token, start + 1, i - 1);
 	}
 	else
 	{
-		while (token[i] && !ft_isspace(token[i]) && !ft_isquote(token[i]))
+		while (token[i] && !ft_isspace(token[i]))
 			i++;
 		word = ft_strnmdup(token, start, i);
 	}

@@ -76,7 +76,7 @@ typedef struct s_shell
  * Implementaion in srcs/utils
 */
 int	activate_shell(t_shell *mini, char *input);
-void	init_mini_shell(t_shell **mini, char **envp);
+void	init_mini_shell(t_shell *mini, char **envp);
 void init_cmd(t_cmd *cmd);
 
 /**

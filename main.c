@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 21:40:50 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/30 17:50:04 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/05/01 07:44:13 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	main(int ac, char **av, char **envp)
 	if (ac == 1)
 	{
 		init_sig();
-		init_mini_shell(&mini, envp);
+		init_mini_shell(mini, envp);
 		if (isatty(STDIN_FILENO))
 		{
 			status = ft_interactive_mode(mini);
