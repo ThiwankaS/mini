@@ -6,14 +6,14 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 12:50:18 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/29 14:28:13 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/05/02 01:44:24 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
 
-static int is_at_the_beginin(char *input);
-static int consective_pipes(char *input);
+static int	is_at_the_beginin(char *input);
+static int	consective_pipes(char *input);
 
 int	check_pipe_character(char *input)
 {
@@ -24,7 +24,7 @@ int	check_pipe_character(char *input)
 	return (0);
 }
 
-static int is_at_the_beginin(char *input)
+static int	is_at_the_beginin(char *input)
 {
 	int		i;
 	char	*trimmed;
@@ -44,12 +44,12 @@ static int is_at_the_beginin(char *input)
 	return (0);
 }
 
-static int consective_pipes(char *input)
+static int	consective_pipes(char *input)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(input && input[i])
+	while (input && input[i])
 	{
 		if (input[i] == '|' && !ft_isquoted(input, i))
 		{

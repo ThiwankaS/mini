@@ -6,13 +6,13 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 12:43:47 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/29 15:09:58 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/05/02 01:47:31 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
 
-int check_input_character(char *input)
+int	check_input_character(char *input)
 {
 	int		i;
 	char	*str;
