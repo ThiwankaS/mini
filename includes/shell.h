@@ -36,16 +36,10 @@ typedef struct s_list
 
 typedef struct s_env
 {
-	char			*name;
+	char			*key;
 	char			*value;
 	struct s_env	*next;
 }	t_env;
-
-typedef struct s_initenv
-{
-	char	**copy_env;
-	t_env	*env;
-}	t_initenv;
 
 typedef struct s_cmd
 {
@@ -60,12 +54,12 @@ typedef struct s_cmd
 
 typedef struct s_shell
 {
-	int 		num_cmds;
-	char		**envp;
-	t_cmd 		*cmds;
-	t_list 		*tokens;
-	t_initenv	*initenv;
+	int			num_cmds;
 	int			status;
+	char		**envp;
+	t_cmd		*cmds;
+	t_list		*tokens;
+	t_env		*env;
 } t_shell;
 
 /**
@@ -73,26 +67,83 @@ typedef struct s_shell
 */
 
 /**
- * Implementaion in srcs/utils
+ * TO DO
+ * norminette
+ * Error: TOO_MANY_LINES       (line: 101, col:   1):	Function has more than 25 lines
 */
-int	activate_shell(t_shell *mini, char *input);
-void	init_mini_shell(t_shell *mini, char **envp);
-void init_cmd(t_cmd *cmd);
 
 /**
- * Implementaion in srcs/validate
+ * Implementation in srcs/utils/error.c
+*/
+int		syntax_error(char *input, char *msg, int code);
+
+/**
+ * Implementation in srcs/utils/helper.c
+*/
+int		activate_shell(t_shell *mini, char *input);
+void	init_mini_shell(t_shell *mini, char **envp);
+
+/**
+ * Implementation in srcs/utils/utils.c
+*/
+int		ft_isspace(int c);
+int		ft_isempty(char *str);
+int		ft_lst_len(t_env *env);
+int		ft_arraylen(char **envp);
+int		quotes_checker(char *input, int len);
+int		ft_strnmcpy(char **dest, char *src, int n, int m);
+char	*ft_strnmdup(char const *src, int n, int m);
+void	print_args(char **args, int size);
+void	print(t_list *list, char *msg);
+bool	builtin_cmd(char *cmd);
+
+/**
+ * TO DO
+ * norminette
+ * Error: TOO_MANY_FUNCS       (line:  91, col:   1):	Too many functions in file
+*/
+
+/**
+ * Implementaion in srcs/validate/validate.c
 */
 int		input_validate(char **input);
-bool	ft_isquoted(const char *str, int n);
-int check_output_character(char *input);
-int check_input_character(char *input);
-int	check_pipe_character(char *input);
-//char 	*in_quotes(char *input);
 
 /**
- * Implementaion in srcs/error.c
+ * Implementaion in srcs/validate/quote.c
 */
-int syntax_error(char *input, char *msg, int code);
+int		ft_isquote(int c);
+int		ft_skip_quoted(char *token, int *index);
+char	*remove_quotes(char *str);
+char	*enclosed_in_quotes(char *input);
+bool	ft_isquoted(const char *str, int n);
+
+/**
+ * Implementaion in srcs/validate/check_pipe.c
+*/
+int		check_pipe_character(char *input);
+
+/**
+ * Implementaion in srcs/validate/check_output.c
+*/
+int		check_output_character(char *input);
+
+/**
+ * Implementaion in srcs/validate/check_input.c
+*/
+int		check_input_character(char *input);
+
+/**
+ * -----> cleared up to this point
+*/
+
+
+
+t_env	*init_env(char **envp);
+void init_cmd(t_cmd *cmd);
+
+
+//char 	*in_quotes(char *input);
+
 
 /**
  * Implementation in srcs/token
@@ -120,12 +171,6 @@ int ft_isquote(int c);
 char *ft_getenv(t_shell *mini, char *name);
 
 /**
- * Implementaion in srcs/utils.c
-*/
-int ft_strnmcpy(char **dest, char *src, int n, int m);
-char *ft_strnmdup(char const *src, int n , int m);
-
-/**
  * Implementaion in srcs/execute.c
 */
 int execute(t_shell *mini);
@@ -150,11 +195,6 @@ char *set_arg_string(char *token, int ch);
 char *get_arg_string(char *token);
 int set_command_type(char *token);
 
-/**
- * Implementaion in srcs/input.c
-*/
-
-
 
 /**
  * Implementaion in srcs/heredoc.c
@@ -164,7 +204,6 @@ int set_command_type(char *token);
 /**
  * Implementaion in srcs/buit_in
 */
-bool	builtin_cmd(char *cmd);
 int		builtin_unset(t_shell *mini, char **unset_args);
 int		builtin_exit(t_shell *mini);
 int		builtin_pwd(void);
@@ -173,7 +212,6 @@ int		builtin_env(t_shell *mini);
 
 
 bool is_char_in_quotes(const char *str, char c);
-void	init_env(t_initenv **initenv, char **envp);
 
 
 t_env	*new_node(char *content);
@@ -184,13 +222,10 @@ char	**copy_env(t_env *env);
 
 int		check_builtin(t_shell *mini);
 int		ft_arraylen(char **envp);
-int		ft_isempty(char *str);
-char 	*get_command(char *token);
+char 	*get_commando(char *token);
 int		tokenize(t_shell *mini, char *input);
-int		quotes_checker(char *input, int len);
 
 
-int	ft_isspace(int c);
 t_cmd *handle_quoted(t_shell *mini, char *token);
 char *enclosed_in_quotes(char *input);
 int check_if_quoted(char *input);
@@ -198,5 +233,4 @@ char *remove_quotes(char *str);
 char *set_path(t_shell *mini, char *token);
 int get_num_args(char *token);
 //char **set_arg_array(int num_args, char *token, char *cmdpath);
-int		ft_lst_len(t_env *env);
 #endif

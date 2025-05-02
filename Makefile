@@ -15,14 +15,6 @@ LIBFT_LINK = -L$(LIBFT_DIR) -lft
 LIBFT_INC = $(LIBFT_DIR)/libft.h $(LIBFT_DIR)/ft_printf.h $(LIBFT_DIR)/get_next_line.h
 
 SRCS = \
-	srcs/built_in/cd.c\
-	srcs/built_in/pwd.c\
-	srcs/built_in/echo.c\
-	srcs/built_in/env.c\
-	srcs/built_in/builtin.c\
-	srcs/built_in/unset.c\
-	srcs/built_in/export.c\
-	srcs/built_in/exit.c\
 	srcs/clean/cleaner.c\
 	srcs/env/handel_env.c\
 	srcs/execute/execute.c\
@@ -45,6 +37,15 @@ SRCS = \
 	srcs/validate/quote.c\
 	srcs/validate/validate.c\
 	main.c\
+
+# srcs/built_in/cd.c\
+	# srcs/built_in/pwd.c\
+	# srcs/built_in/echo.c\
+	# srcs/built_in/env.c\
+	# srcs/built_in/builtin.c\
+	# srcs/built_in/unset.c\
+	# srcs/built_in/export.c\
+	# srcs/built_in/exit.c\
 
 OBJS = $(SRCS:.c=.o)
 

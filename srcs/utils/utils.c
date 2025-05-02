@@ -6,23 +6,25 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 22:01:27 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/04/30 13:59:43 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/05/02 00:51:26 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
 
-char *ft_strnmdup(char const *src, int n , int m)
+char	*ft_strnmdup(char const *src, int n, int m)
 {
-	int i = 0;
-	char *dest;
+	int		i;
+	char	*dest;
 
-	if(!src || m == 0)
-		return (NULL);
+	i = 0;
+	dest = NULL;
+	if (!src || m == 0)
+		return (dest);
 	dest = malloc(sizeof(char) * ((m - n) + 1));
-	if(!dest)
+	if (!dest)
 		return (NULL);
-	while(src && src[i + n] && (i + n) < m)
+	while (src && src[i + n] && (i + n) < m)
 	{
 		dest[i] = src[i + n];
 		i++;
@@ -31,17 +33,16 @@ char *ft_strnmdup(char const *src, int n , int m)
 	return (dest);
 }
 
-int ft_strnmcpy(char **dest, char *src, int n, int m)
+int	ft_strnmcpy(char **dest, char *src, int n, int m)
 {
-	int i = 0;
+	int	i;
 
+	i = 0;
 	if (n >= m || !src || !dest)
 		return (-1);
-
 	*dest = malloc(sizeof(char) * (m - n + 1));
 	if (!*dest)
 		return (-1);
-
 	while ((i + n) < m && src[i + n])
 	{
 		(*dest)[i] = src[i + n];
@@ -51,21 +52,25 @@ int ft_strnmcpy(char **dest, char *src, int n, int m)
 	return (i);
 }
 
-void print_args(char **args, int size)
+void	print_args(char **args, int size)
 {
-	int i = 0;
-	while(i <= size)
+	int	i;
+
+	i = 0;
+	while (i <= size)
 	{
 		printf("args[%d] : %s\n", i, args[i]);
 		i++;
 	}
 }
 
-void print(t_list *list, char *msg)
+void	print(t_list *list, char *msg)
 {
+	t_list	*current;
+
 	printf("\n%s\n", msg);
-	t_list *current = list;
-	while(current)
+	current = list;
+	while (current)
 	{
 		printf("%s\n", current->token);
 		current = current->next;
@@ -75,7 +80,7 @@ void print(t_list *list, char *msg)
 
 int	ft_arraylen(char **envp)
 {
-	int		len;
+	int	len;
 
 	len = 0;
 	while (envp && envp[len])
@@ -126,7 +131,7 @@ int	quotes_checker(char *input, int len)
 bool	builtin_cmd(char *cmd)
 {
 	static char	*builtins[6];
-	int		i;
+	int			i;
 
 	i = 0;
 	builtins[0] = "exit";
@@ -144,7 +149,7 @@ bool	builtin_cmd(char *cmd)
 	return (false);
 }
 
-int		ft_lst_len(t_env *env)
+int	ft_lst_len(t_env *env)
 {
 	t_env	*temp;
 	int		len;

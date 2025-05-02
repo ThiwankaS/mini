@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 21:40:50 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/05/01 07:44:13 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/05/01 22:36:29 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	main(int ac, char **av, char **envp)
 	return (status);
 }
 
-int	ft_stealth_mode(t_shell	*mini)
+static int	ft_stealth_mode(t_shell	*mini)
 {
 	char	*input;
 	int		status;
@@ -69,7 +69,7 @@ int	ft_stealth_mode(t_shell	*mini)
 	return (status);
 }
 
-int	ft_interactive_mode(t_shell	*mini)
+static int	ft_interactive_mode(t_shell	*mini)
 {
 	char	*input;
 	int		status;
